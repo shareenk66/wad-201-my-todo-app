@@ -15,6 +15,48 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
+    static getTodos(){
+      return this.findAll();
+    }
+
+    static async overdue() {
+      // FILL IN HERE TO RETURN OVERDUE ITEMS
+      //return a list of overdue items
+      //return a list "[items..]" item.duedate < presnt
+      //return an array of all tuples/items of that table where(conditon)
+      const overdues = await Todo.findAll({
+        where:{
+          dueDate:{
+            [Op.lt]:new Date()
+          }
+        }
+      });
+      return overdues
+    }
+
+    static async dueToday() {
+      // FILL IN HERE TO RETURN ITEMS DUE tODAY
+      const dueTodays = await Todo.findAll({
+        where:{
+          dueDate:{
+            [Op.eq]:new Date()
+          }
+        }
+      });
+      return dueTodays
+    }
+
+    static async dueLater() {
+      // FILL IN HERE TO RETURN ITEMS DUE LATER
+      const duelaters = await Todo.findAll({
+        where:{
+          dueDate:{
+            [Op.gt]:new Date()
+          }
+        }
+      });
+      return duelaters
+    }
     
 
     markAsCompleted() {

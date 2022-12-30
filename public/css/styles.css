@@ -2,3 +2,7 @@ body{
     color: rgb(0, 0, 0);
     font-family: 'Courier New', Courier, monospace;
 }
+
+.Todo-item:hover .trash-icon{
+    display:block;
+}

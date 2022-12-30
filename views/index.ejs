@@ -9,10 +9,29 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<%- include('header.ejs') %> 
+    <div class="grid grid-cols-6">
+        <div class="col-start-3 col-span-2">
+            <%- include('header.ejs') %> 
+            <form action="">
+                <div class="fles gap-2 py-4">
+                    <div class="flex-auto">
+                        <input type="text" placeholder="what's next?" class="border border-gray-400 rounded w-full p-1 text-sm " required/>
+                    </div>
+                    <div class="flex py-4">
+                        <input type="date" class="border border-gray-400 rounded w-full p-1 text-sm leading-2 "/>
+                    </div>
+                    <div class="flex-none">
+                        <button type="submit" class="bg-green-600 text-white px-4 py-1 rounded font-medium mr-2 mb-2" >Add</button>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <%- include('todos.ejs',{subtitle:"Overdues",data:overdues,unq:"count-overdue"}) %> 
+                <%- include('todos.ejs',{subtitle:"Due Today",data:dueToday,unq:"count-due-today"}) %> 
+                <%- include('todos.ejs',{subtitle:"Due Later",data:dueLater,unq:"count-due-later"}) %> 
+            </div>
+        </div>
+    </div>
 
-<%- include('todos.ejs',{allTodos}) %> 
-
-<%- include('footer.ejs') %>
 </body>
 </html>

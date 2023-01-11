@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.lt]: new Date(),
           },
+          completed: false,
         },
       });
       return overdues;
@@ -42,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.eq]: new Date(),
           },
+          completed: false,
         },
       });
       return dueTodays;
@@ -54,9 +56,20 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.gt]: new Date(),
           },
+          completed: false,
         },
       });
       return duelaters;
+    }
+
+    static async completedItems() {
+      // FILL IN HERE TO RETURN ITEMS DUE LATER
+      const completeditems = await Todo.findAll({
+        where: {
+          completed: true,
+        },
+      });
+      return completeditems;
     }
 
     static async remove(id) {
@@ -69,6 +82,9 @@ module.exports = (sequelize, DataTypes) => {
 
     markAsCompleted() {
       return this.update({ completed: true });
+    }
+    setCompletionStatus(s) {
+      return this.update({ completed: s });
     }
   }
   Todo.init(

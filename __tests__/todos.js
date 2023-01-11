@@ -8,7 +8,9 @@ let server, agent;
 describe("Todo Application", function () {
   beforeAll(async () => {
     await db.sequelize.sync({ force: true });
-    server = app.listen(3000, () => {console.log("started test server at port3000");});
+    server = app.listen(3000, () => {
+      console.log("started test server at port3000");
+    });
     agent = request.agent(server);
   });
 
@@ -27,9 +29,9 @@ describe("Todo Application", function () {
       dueDate: new Date().toISOString(),
       completed: false,
     });
-    var parsedResponse = JSON.parse(response);
-    expect(parsedResponse.statusCode).toBe(302);
-    
+    console.log(response);
+    // var parsedResponse = JSON.parse(response.text);
+    expect(response.statusCode).toBe(302);
   });
 
   //  test("Marks a todo with the given ID as complete", async () => {

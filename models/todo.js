@@ -1,5 +1,5 @@
 "use strict";
-const { Model , Op } = require("sequelize");
+const { Model, Op } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    // eslint-disable-next-line no-unused-vars
     static associate(models) {
       // define association here
     }
@@ -15,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
-    static getTodos(){
+    static getTodos() {
       return this.findAll();
     }
 
@@ -25,39 +26,38 @@ module.exports = (sequelize, DataTypes) => {
       //return a list "[items..]" item.duedate < presnt
       //return an array of all tuples/items of that table where(conditon)
       const overdues = await Todo.findAll({
-        where:{
-          dueDate:{
-            [Op.lt]:new Date()
-          }
-        }
+        where: {
+          dueDate: {
+            [Op.lt]: new Date(),
+          },
+        },
       });
-      return overdues
+      return overdues;
     }
 
     static async dueToday() {
       // FILL IN HERE TO RETURN ITEMS DUE tODAY
       const dueTodays = await Todo.findAll({
-        where:{
-          dueDate:{
-            [Op.eq]:new Date()
-          }
-        }
+        where: {
+          dueDate: {
+            [Op.eq]: new Date(),
+          },
+        },
       });
-      return dueTodays
+      return dueTodays;
     }
 
     static async dueLater() {
       // FILL IN HERE TO RETURN ITEMS DUE LATER
       const duelaters = await Todo.findAll({
-        where:{
-          dueDate:{
-            [Op.gt]:new Date()
-          }
-        }
+        where: {
+          dueDate: {
+            [Op.gt]: new Date(),
+          },
+        },
       });
-      return duelaters
+      return duelaters;
     }
-    
 
     markAsCompleted() {
       return this.update({ completed: true });

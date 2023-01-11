@@ -59,6 +59,14 @@ module.exports = (sequelize, DataTypes) => {
       return duelaters;
     }
 
+    static async remove(id) {
+      return this.destroy({
+        where: {
+          id,
+        },
+      });
+    }
+
     markAsCompleted() {
       return this.update({ completed: true });
     }

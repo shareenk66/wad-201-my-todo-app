@@ -51,11 +51,16 @@
         <div class="col-start-3 col-span-2">
             <%- include('header.ejs') %> 
             <a href="/signout">Signout</a>
+            <% if(messages && messages.error && messages.error.length > 0)  { %>
+                <% for(var i=0; i<messages.error.length; i++) { %>
+                        <li> <%= messages.error[i] %></li>
+                <% } %>
+              <% } %>
             <form action="/todos" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="fles gap-2 py-4">
                     <div class="flex-auto">
-                        <input type="text" name="title" placeholder="what's next?" class="border border-gray-400 rounded w-full p-1 text-sm " required/>
+                        <input type="text" name="title" placeholder="what's next?" class="border border-gray-400 rounded w-full p-1 text-sm " />
                     </div>
                     <div class="flex py-4">
                         <input type="date" name="dueDate" class="border border-gray-400 rounded w-full p-1 text-sm leading-2 " required/>

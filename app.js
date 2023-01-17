@@ -107,6 +107,7 @@ app.get(
         dueLater,
         completedItems,
         csrfToken: request.csrfToken(),
+        userName: `${request.user.firstName} ${request.user.lastName}`,
       });
     } else {
       response.json({
@@ -145,11 +146,20 @@ app.post("/users", async (request, response) => {
     });
   } catch (error) {
     console.log(error);
+    request.flash("error", "User email already exists try sign in");
+    response.redirect("/signup");
   }
 });
 
 app.get("/login", (request, response) => {
-  response.render("login", { title: "Login", csrfToken: request.csrfToken() });
+  if (request.user) {
+    response.redirect("/todos");
+  } else {
+    response.render("login", {
+      title: "Login",
+      csrfToken: request.csrfToken(),
+    });
+  }
 });
 
 app.post(
@@ -173,16 +183,16 @@ app.get("/signout", (request, response, next) => {
   });
 });
 
-app.get("/todos", async function (_request, response) {
-  console.log("Processing list of all Todos ...");
-  // FILL IN YOUR CODE HERE
-  const allTodos = await Todo.findAll();
-  response.send(allTodos);
-  // First, we have to query our PostgerSQL database using Sequelize to get list of all Todos.
+// app.get("/todos", async function (_request, response) {
+//   console.log("Processing list of all Todos ...");
+//   // FILL IN YOUR CODE HERE
+//   const allTodos = await Todo.findAll();
+//   response.send(allTodos);
+//   // First, we have to query our PostgerSQL database using Sequelize to get list of all Todos.
 
-  // Then, we have to respond with all Todos, like:
-  // response.send(todos)
-});
+//   // Then, we have to respond with all Todos, like:
+//   // response.send(todos)
+// });
 
 app.get("/todos/:id", async function (request, response) {
   try {
